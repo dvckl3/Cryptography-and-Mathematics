@@ -2,9 +2,6 @@
 Some good books to self-taught Cryptography and Number Theory related to it
 $\alpha$, $\beta$
 
-$\displaystyle D_{n} =\begin{bmatrix}
-a & c & 0 & 0\\
-b & a & c & 0\\
-0 & b & a & c\\
-0 & 0 & b & a
-\end{bmatrix} =aD_{n-1} -bcD_{n-2}$
+
+
+$\displaystyle D_{k} (c)=(-1)^{k}\sum _{\ell =0}^{k} (-1)^{\ell } c^{2\ell -k}\binom{\ell }{k-\ell } =\sum _{m=0}^{k} (-1)^{m} c^{k-2m}\binom{k-m}{m}$
