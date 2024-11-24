@@ -8,7 +8,7 @@ Link drive tổng hợp các đầu sách mình sẽ để ở đây: [Link sác
 Một số link sách khác : 
 - [Mathematics of Public Key Cryptography. Version 2.0](https://www.math.auckland.ac.nz/~sgal018/crypto-book/main.pdf)
 - [A Graduate Course in Applied Cryptography](https://toc.cryptobook.us/book.pdf)
-
+- [Additive combinatorics with a view towards computer science and cryptography: An exposition](https://arxiv.org/abs/1108.3790)
 
 ### Một số kiến thức số học nền tảng
 
