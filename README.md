@@ -10,6 +10,8 @@ Một số link sách khác :
 - [A Graduate Course in Applied Cryptography](https://toc.cryptobook.us/book.pdf)
 - [Additive combinatorics with a view towards computer science and cryptography: An exposition](https://arxiv.org/abs/1108.3790)
 
+Highly recommended: [A Course in Computational Algebraic Number Theory](https://drive.google.com/file/d/1qdhqxCCOUhRpc2PWKOAA4t4LGL0HtTQD/view) : một cuốn sách rất hay tổng hợp các thuật toán quan trọng trong lí thuyết số tính toán với phần giải thích khá dễ hiểu về cơ sở toán học của các thuật. 
+
 ### Một số kiến thức số học nền tảng
 
 (Cập nhật sau)
