@@ -11,6 +11,7 @@ Một số link sách khác :
 - [Additive combinatorics with a view towards computer science and cryptography: An exposition](https://arxiv.org/abs/1108.3790)
 - [Cryptography Made simple](https://mog.dog/files/SP2019/Cryptography%20Made%20Simple.pdf)
 - [A term of Commutative Algebra](https://www.mi.fu-berlin.de/en/math/groups/arithmetic_geometry/teaching/exercises/Altman_-Kleiman---A-term-of-commutative-algebra-_2017_.pdf)
+- [Cấu trúc đại số - Algebraic Structures](https://www.rug.nl/staff/steffen.muller/lecture_notes_algebraic_structures.pdf)
 
 Highly recommended: [A Course in Computational Algebraic Number Theory](https://drive.google.com/file/d/1qdhqxCCOUhRpc2PWKOAA4t4LGL0HtTQD/view) : một cuốn sách rất hay tổng hợp các thuật toán quan trọng trong lí thuyết số tính toán với phần giải thích khá dễ hiểu về cơ sở toán học của các thuật. 
 
