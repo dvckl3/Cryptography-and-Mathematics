@@ -1,4 +1,4 @@
-# Cryptography-and-Number-theory
+# Cryptography and Mathematics
 Dưới đây mình xin giới thiệu với mọi người một số đầu sách hay để tự học về lý thuyết mật mã và lý thuyết số. 
 
 Lý thuyết mật mã và lý thuyết số là hai lĩnh vực có mối quan hệ chặt chẽ với nhau. Phần lớn các hệ mã khóa công khai hiện đại đều được xây dựng dựa trên một phần nền tảng của lý thuyết số. Tiêu biểu nhất có lẽ là hệ mã khóa RSA. 
