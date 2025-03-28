@@ -11,7 +11,7 @@ Một số link sách khác :
 
 Highly recommended:
 - [A Course in Computational Algebraic Number Theory](https://drive.google.com/file/d/1qdhqxCCOUhRpc2PWKOAA4t4LGL0HtTQD/view) : một cuốn sách rất hay tổng hợp các thuật toán quan trọng trong lí thuyết số tính toán với phần giải thích khá dễ hiểu về cơ sở toán học của các thuật.
-- [Real-World Cryptography, Daivd Wong](https://drive.google.com/drive/u/3/folders/1mao5fHDoW-u82mo-4-lQnS2LUwmDhrcj) : cuốn này mình có để ở link drive trên kia. Mình có đọc qua cuốn này thì thấy sách viết rất cuốn, không dùng quá nhiều kiến thức cao siêu, tác giả cũng diễn giải chi tiết dễ hiểu, phù hợp cho những ai mới bắt đầu tìm hiểu về Cryptography nên đọc qua để có cái nhìn tổng quát về mọi thứ (nhưng không phù hợp với những ai đang cần nghiên cứu chuyên sau)
+- [Real-World Cryptography, Daivd Wong](https://drive.google.com/drive/u/3/folders/1mao5fHDoW-u82mo-4-lQnS2LUwmDhrcj) : cuốn này mình có để ở link drive trên kia. Mình có đọc qua cuốn này thì thấy sách viết rất cuốn, không dùng quá nhiều kiến thức cao siêu, tác giả cũng diễn giải chi tiết dễ hiểu, phù hợp cho những ai mới bắt đầu tìm hiểu về Cryptography nên đọc qua để có cái nhìn tổng quát về mọi thứ (nhưng không phù hợp với những ai đang cần nghiên cứu chuyên sâu)
 
 
 
