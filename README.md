@@ -40,6 +40,10 @@ Một số blog về crypto/security mình sưu tầm được: (đống này m�
 
 
 # Maths
+Phần này mình sẽ chỉ nói về toán và các kiến thức nền tảng cần biết trong Cryptography. Các kiến thức về Cryptography mình sẽ nói trong 1 bài khác. 
+
+
+
 
 
 (Cập nhật sau)
