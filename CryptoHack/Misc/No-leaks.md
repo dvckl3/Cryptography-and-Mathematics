@@ -69,4 +69,6 @@ Tiếp theo là phần tương tác với server, ta được quyền request t�
 
 Vấn đề là mỗi lần ta request tới thì key bị thay đổi, nên kể cả khi có request 2 lần trở lên đi nữa thì cũng không có tác dụng gì trong việc khôi phục lại key. 
 
+V thì h ta phải làm sao...... Sau một hồi suy nghĩ thì mình thấy không còn cách nào khác ngoài cách Bruteforce :V
+
 
