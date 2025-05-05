@@ -82,7 +82,7 @@ Code sử dụng pwntools như dưới đây:
 ```python
 from pwn import *
 import json 
-from Cryptodome.Util.number import *
+from Cryptodo.Util.number import *
 
 conn=remote('socket.cryptohack.org',13372)
 conn.recvline()
