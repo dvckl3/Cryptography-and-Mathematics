@@ -1,1 +1,2 @@
 https://priv.pub/posts/dicectf-quals-2025/ 
+https://github.com/defund/ctf/tree/master/dicectf-quals-2025
