@@ -1,0 +1,342 @@
+\documentclass[12pt]{article}
+\usepackage{type1cm}
+\usepackage[utf8]{vietnam}
+\usepackage{yhmath}
+\usepackage{cancel}
+\usepackage{color}
+\usepackage{siunitx}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{amssymb}
+\usepackage{gensymb}
+\usepackage{tabularx}
+\usepackage{extarrows}
+\usepackage{booktabs}
+\usepackage{tcolorbox} %Gói lệnh tạo hộp văn bảng được tô màu
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{tikz-cd}
+\usepackage{varwidth}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins}
+
+\usepackage{tcolorbox}
+\usepackage{varwidth}
+\tcbuselibrary{skins, breakable}
+
+% Box kiểu "Construction" như sách mật mã
+\newtcolorbox{constructionbox}[2][]{%
+  enhanced,
+  sharp corners,
+  boxrule=0.5pt,
+  colback=white,
+  colframe=black,
+  fonttitle=\bfseries\itshape,  % giống CONSTRUCTION 11.26
+  title={#2},
+  before upper={\setlength{\parindent}{0pt}}, % bỏ thụt đầu dòng
+  width fit,
+  boxsep=5pt,
+  breakable,
+  #1
+}
+
+
+\newtcolorbox{simplebox}[1][]{
+  colframe=black,    % viền đen
+  colback=white,     % nền trắng
+  sharp corners,     % góc vuông (tùy chọn)
+  boxrule=0.5pt,     % độ dày viền
+  #1                 % cho phép truyền thêm tuỳ chỉnh
+}
+
+\newtcolorbox{mybox}[2][]{colbacktitle=white!10!white,
+	colback=white!10!white,coltitle=black!70!black,
+	title={#2},fonttitle=\bfseries,#1}
+
+
+
+    
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{green!50!black},
+    stringstyle=\color{red},
+    numbers=left,
+    numberstyle=\tiny,
+    stepnumber=1,
+    breaklines=true,
+    frame=single,
+    captionpos=b
+}
+
+\newtcolorbox{mybox2}[2][]{colbacktitle=white!10!white,
+	colback=white!10!white,coltitle=black!70!black,
+	title={#2},fonttitle=\bfseries,#1}
+	
+\usepackage{physics}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{mathdots}
+\usepackage{tkz-tab}
+\usepackage{hyperref}
+
+\setlength{\parskip}{2mm}
+\setlength{\parindent}{0mm}
+
+\usepackage{graphicx}
+\usepackage{gensymb}
+\usepackage{amsmath,amsxtra,amssymb,latexsym,amscd,amsthm,graphicx}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{mdframed}
+\usepackage[dvips]{color}
+
+\usepackage{tabularx}
+\usepackage{extarrows}
+\usepackage{booktabs}
+\usetikzlibrary{fadings}
+\usetikzlibrary{patterns}
+\usetikzlibrary{shadows.blur}
+\usetikzlibrary{shapes}
+\usepackage[unicode]{hyperref}
+
+\title{\textbf{Hệ mã khóa công khai RSA}}
+\author{Lê Trí Đức }
+\date{April 2025}
+
+\begin{document}
+
+\maketitle
+
+\section{Basic concepts}
+
+Đầu tiên ta nhắc lại một số khái niệm cơ bản. 
+
+\subsection{Efficient Algorithms}
+Có 3 trường hợp khác nhau như sau:
+\begin{itemize}
+\item $\displaystyle A$ là một thuật toán tất định chạy trong thời gian đa thức nếu như tồn tại một đa thức $\displaystyle P_{A}( \lambda )$ sao cho với mọi đầu vào $\displaystyle X$ có $\displaystyle len( X) =\lambda $ thì $\displaystyle TIME_{A}( X) \leqslant P_{A}( X)$
+\item $\displaystyle A$ là một thuật toán xác suất đa thức nghiệm ngặt (A probabilistic strict polynomial-time algorithm) nếu như nó là một thuật toán xác suất có thời gian chạy là đa thức
+\item $\displaystyle A$ là một thuật toán xác suất có thời gian chạy kỳ vọng đa thức (A probabilistic expected polynomial-time algorithm) nếu như $\displaystyle E[ TIME_{A}( X)] \leqslant P_{A}( X)$
+\end{itemize}
+
+
+Ngoài ra ta còn có khái niệm về negligible functions như sau:
+
+\textbf{Negligible Functions.} Một hàm $\displaystyle f:\mathbb{Z}_{\geqslant 0}\rightarrow \mathbb{R}_{\geqslant 0}$ được gọi là không đáng kể nếu như với mọi $\displaystyle c >0$, tồn tại một số $\displaystyle \lambda _{0}  >0$ sao cho với mọi $\displaystyle \lambda \geqslant \lambda _{0}$ thì ta có $\displaystyle f( \lambda ) < \frac{1}{\lambda ^{c}}$.
+
+Hoặc ta có thể định nghĩa theo cách khác như sau: Một hàm $\displaystyle g( t) :\mathbb{Z}^{+}\rightarrow \mathbb{R}^{+}$ được gọi là không đáng kể nếu với mọi đa thức $\displaystyle h\in \mathbb{Z}^{+}[ x]$ thì ta luôn có $\displaystyle g( t) < \frac{1}{h( t)}$ với mọi $\displaystyle t$ đủ lớn. 
+
+Nói cách khác hàm này cho ta biết rằng : nó sẽ giảm cực nhanh khi đầu vào đủ lớn. 
+
+
+
+\subsection{One-way functions}
+
+Một hàm một chiều $\displaystyle F$ sẽ cung cấp cho ta:
+\begin{itemize}
+\item $\displaystyle F.gen( t) :\mathbb{Z}^{+}\rightarrow \{0,1\}^{*}$: là một thuật toán ngẫu nhiên chạy trong thời gian đa thức với đầu vào là $\displaystyle t$ và output là một chuỗi bit $\displaystyle \lambda \in \{0,1\}^{*}$ miêu tả đặc tính của hàm đó.
+\item $\displaystyle F.in( \lambda )$ là đầu vào của hàm một chiều $\displaystyle F_{\lambda }$.
+\item $\displaystyle F.out( \lambda )$ là đầu ra của hàm một chiều $\displaystyle F_{\lambda }$. 
+\item $\displaystyle F.eval( \lambda ,X) =F_{\lambda }( X) :F.in( \lambda )\rightarrow F.out( \lambda )$
+\end{itemize}
+
+
+
+Tính an toàn: Với một thuật toán ngẫu nhiên $\displaystyle A$ ta định nghĩa 
+\begin{equation*}
+Adv_{A,F}( t) =\Pr\left[ F_{\lambda }( A( F_{\lambda }( x))) =F_{\lambda }( X) \ |\ \lambda \leftarrow F.gen( t) ,X\leftarrow F.in( \lambda )\right]
+\end{equation*}
+Như vậy hàm $\displaystyle F$ được gọi là một hàm ngẫu nhiên nếu như giá trị của xác suất $\displaystyle Adv_{A,F}( t)$ là không đáng kể (negligible probability).
+
+\textbf{Ví dụ: }$\displaystyle \pi $ là một hàm hoán vị một chiều thỏa với mọi $\displaystyle \lambda \in \{0,1\}^{*}$ ta đều có $\displaystyle \pi .in( \lambda ) =\pi .out( \lambda )$ và đồng thời $\displaystyle \pi _{\lambda }$ là song ánh. 
+
+\textbf{Ví dụ}: $\displaystyle \pi ^{RSA} .gen( t) :$ sinh ra hai số nguyên tố $\displaystyle t$ bits $\displaystyle p,q$ ngẫu nhiên và có đầu ra $\displaystyle \lambda =\langle N=pq\rangle $ 
+
+\subsection{Public Key Scheme}
+
+\textbf{Định nghĩa.} Một lược đồ khóa công khai gồm bộ ba thuật toán xác suất có thời gian chạy đa thức $\displaystyle (\mathsf{Gen} ,\mathsf{Enc} ,\mathsf{Dec} )$ và một hàm lấy độ dài $\displaystyle l( n) :\mathbb{N}\rightarrow \mathbb{N}$ sao cho:
+
+1. Thuật toán sinh khóa $\displaystyle \mathsf{Gen}$ có đầu vào là một security parameter $\displaystyle 1^{n}$ và output một cặp khóa $\displaystyle ( pk,sk)$. Khóa đầu tiên $\displaystyle pk$ được gọi là khóa công khai và khóa tiếp theo $\displaystyle sk$ được gọi là khóa bí mật. Ta sẽ quy ước $\displaystyle len(\mathsf{pk}) =len(\mathsf{sk}) =n$. 
+
+2. Thuật toán mã hóa $\displaystyle \mathsf{Enc}$ lấy đầu vào là message $\displaystyle m\in \{0,1\}^{l( n)}$ và khóa công khai $\displaystyle pk$. Đầu ra của $\displaystyle \mathsf{Enc}$ sẽ là một bản mã $\displaystyle c$. Ta kí hiệu $\displaystyle c\leftarrow \mathsf{Enc}_{pk}( m)$.
+
+3. Thuật toán giải mã $\displaystyle \mathsf{Dec}$ có đầu vào là $\displaystyle c$ và khóa bí mật $\displaystyle sk$. Output của nó sẽ là bản rõ ban đầu $\displaystyle m\in \{0,1\}^{l( n)}$ hoặc $\displaystyle \perp $ kí hiệu cho việc giải mã thất bại. Ta có thể viết viết $\displaystyle m\leftarrow \mathsf{Dec}_{sk}( c)$.
+
+4. Với mỗi $\displaystyle m\in \{0,1\}^{l( n)}$ và các hàm $\displaystyle (\mathsf{Gen} ,\mathsf{Enc} ,\mathsf{Dec} )$ thì xác suất để $\displaystyle \mathsf{Dec}_{sk}(\mathsf{Enc}_{pk}( m)) =m$ là $\displaystyle 1-negl( n)$, trong đó $\displaystyle negl( n)$ là một hàm không đáng kể. Tức là xác suất để giải mã thành công gần như là chắc chắn. 
+
+
+\subsection{Security Against CPA and CCA}
+
+Đầu tiên ta có một lược đồ khóa công khai $\displaystyle \Pi =(\mathsf{Gen} ,\mathsf{Enc} ,\mathsf{Dec} )$ và một adversary $\displaystyle A$. Ta xét một thí nghiệm như sau: 
+
+\begin{mybox}
+{\begin{exe}
+$\displaystyle \mathsf{Pub}_{A,\Pi }^{cpa}( n) :$
+\end{exe}}
+
+1. Sinh cặp khóa công khai và bí mật $\displaystyle ( pk,sk)\leftarrow \mathsf{Gen}\left( 1^{n}\right)$.
+
+2. Adversary $\displaystyle A$ được biết về $\displaystyle pk$ và một cặp bản rõ $\displaystyle m_{0} ,m_{1}$ được lấy từ không gian bản rõ. 
+
+3. Một bit ngẫu nhiên $\displaystyle b\in \{0,1\}$ được chọn, sau đó một ciphertext $\displaystyle c\leftarrow \mathsf{Enc}_{pk}( m_{b})$ được tính và gửi đến $\displaystyle A$. 
+
+4. $\displaystyle A$ sẽ output ra một bit $\displaystyle b'\in \{0,1\}$. Thí nghiệm sẽ trả về kết quả là $\displaystyle 1$ nếu như $\displaystyle A$ đoán đúng, tức là $\displaystyle b=b'$ và là $\displaystyle 0$ nếu như $\displaystyle b\neq b'$. 
+\end{mybox}
+
+\textbf{Định lí. }Cho lược đồ khóa công khai $\displaystyle \Pi =(\mathsf{Gen} ,\mathsf{Enc} ,\mathsf{Dec} )$ và một negligible function $\displaystyle negl( n)$. Nếu như
+\begin{equation*}
+\ \Pr\left[\mathsf{Pub}_{A,\Pi }^{cpa}( n) =1\right] \leqslant \frac{1}{2} +negl( n)
+\end{equation*}
+thì ta gọi lược đồ $\displaystyle \Pi $ là CPA-Secure
+
+Tức là kể cả Adversary A có biết thông tin vầ $pk$ và được chọn hai bản rõ $m_{0}$ và $m_{1}$ thì cũng không thể nào phân biệt được chúng sau khi mã hóa. 
+
+
+CCA-Secure cũng được định nghĩa tương tự
+\begin{mybox}  
+{\begin{exe}
+$\displaystyle \mathsf{Pub}_{A,\Pi }^{cca}( n) :$
+\end{exe}}
+1. Sinh cặp khóa $\displaystyle ( pk,sk)\leftarrow \mathsf{Gen}\left( 1^{n}\right)$.
+
+2. Adversary biết thông tin về khóa công khai $\displaystyle pk$ và được quyền truy vấn vào một decryption oracle $\displaystyle \mathsf{Dec}_{sk}( \cdot )$. Nó sẽ output ra một cặp bản rõ $\displaystyle ( m_{0} ,m_{1})$.
+
+3. Chọn một bit $\displaystyle b\in \{0,1\}$ ngẫu nhiên và sau đó tính $\displaystyle c\leftarrow \mathsf{Enc}_{pk}( m_{b})$	và gửi tới $\displaystyle A$. 
+
+4. $\displaystyle A$ tiếp tục truy vấn tới $\displaystyle \mathsf{Dec}_{sk}( \cdot )$ nhưng không được truy vấn với đầu vào là $\displaystyle c$. Sau khi hết số lượt truy vấn thì $\displaystyle A$ sẽ output ra một bit $\displaystyle b'\in \{0,1\}$. Thí nghiệm sẽ trả về kết quả là $\displaystyle 1$ nếu như $\displaystyle A$ đoán đúng, tức là $\displaystyle b=b'$ và là $\displaystyle 0$ nếu như $\displaystyle b\neq b'$. 
+
+\end{mybox}
+
+\textbf{Định lí. }Cho lược đồ khóa công khai $\displaystyle \Pi =(\mathsf{Gen} ,\mathsf{Enc} ,\mathsf{Dec} )$ và một negligible function $\displaystyle negl( n)$. Nếu như
+\begin{equation*}
+\ \Pr\left[\mathsf{Pub}_{A,\Pi }^{cca}( n) =1\right] \leqslant \frac{1}{2} +negl( n)
+\end{equation*}
+thì ta gọi lược đồ $\displaystyle \Pi $ là CCA-Secure
+
+
+
+\section{RSA Encryption}
+
+\subsection{Plain RSA}
+Ta bắt đầu với plain RSA hay còn gọi là textbook RSA. Đây là phiên bản đơn giản nhất của lược đồ mã hóa RSA. Trong phiên bản này ta có $\displaystyle \mathsf{GenRSA}$ là một PPT Algorithm với đầu vào $\displaystyle 1^{n}$ và đầu ra là modulus $\displaystyle N$ dùng trong thuật toán cùng với cặp khóa công khai và bí mật $\displaystyle ( e,d)$ thỏa mãn $\displaystyle ed\equiv 1\bmod \phi ( N)$. 
+
+
+\begin{constructionbox}{KeyGen}
+
+
+Với hàm $\displaystyle \mathsf{GenRSA}$ như trên ta định nghĩa một lược đồ khóa công khai RSA như sau: 
+\begin{itemize}
+\item $\displaystyle \mathsf{Gen}$: với đầu vào là $\displaystyle 1^{n}$, sẽ chạy hàm $\displaystyle \mathsf{GenRSA}$ và cho ra output $\displaystyle \langle N,e\rangle $ là cặp khóa công khai và $\displaystyle \langle N,d\rangle $ là cặp khóa bí mật. 
+\item $\displaystyle \mathsf{Enc}$: Với đầu vào là cặp $\displaystyle pk=\langle N,e\rangle $ và một message $\displaystyle m\in \mathbb{Z}_{N}^{*}$, tính ciphertext $\displaystyle c$ thỏa
+\end{itemize}
+\begin{equation*}
+c:=\left[ m^{e}\bmod N\right]
+\end{equation*}
+\begin{itemize}
+\item $\displaystyle \mathsf{Dec}$: Với đầu vào là cặp $\displaystyle sk=\langle N,d\rangle $ và ciphertext $\displaystyle c$, cho đầu ra là 
+\end{itemize}
+\begin{equation*}
+m:=\left[ c^{d}\bmod N\right]
+\end{equation*} 
+\end{constructionbox}
+
+
+\subsection{Attacks on Plain RSA}
+
+Plain RSA về cơ bản là không an toàn và nó không thể được sử dụng trong thực tế. Ở đây ta sẽ nói qua một số Attacks có thể bẻ khóa phiên bản trên của RSA.
+
+
+\subsubsection{Message Recovery}
+Plain RSA encryption là một thuật toán tất địn, tức là với mỗi plaintext và key thì đầu ra luôn là một ciphertext cố định. Chính vì vậy trong trường hợp một Adversary $\displaystyle A$ có quyền truy vấn vô hạn vào encryption oracle thì nó có thể đoán được message $\displaystyle m< B$ ban đầu sau $\displaystyle O( B)$ lần truy vấn. Nhưng trong một số trường hợp $\displaystyle B$ sẽ rất lớn cho nên việc brute-force sẽ trở nên không khả thi. 
+
+Lúc này ta xét đến một thuật toán như sau: Giả sử ta biết thông tin về $\displaystyle \langle N,e\rangle $ cùng với $\displaystyle c$ và ta muốn tìm $\displaystyle m< 2^{n}$ sao cho $\displaystyle m^{e} =c\bmod N$. Ta sẽ chọn một số $\displaystyle \alpha  >\frac{1}{2}$ và với $\displaystyle m$ là một số nguyên $\displaystyle n-bits$ thì xác suất để tồn tại cặp số $\displaystyle ( r,s)$ thỏa mãn $\displaystyle 1< r\leqslant s\leqslant 2^{\alpha n}$ thỏa mãn $\displaystyle m=r\cdotp s$ là rất cao (ta sẽ chứng minh ở cuối bài). Ta có 
+\begin{equation*}
+m^{e} =r^{e} .s^{e} =c\bmod N\Longrightarrow s^{e} =c\times \left( r^{e}\right)^{-1}\bmod N
+\end{equation*}
+Cách attacks như trên còn được gọi là meet-in-the-middle. Cụ thể ta sẽ xét hai số $\displaystyle r,s\in \left( 1,2^{\alpha n}\right]$. Sau đó ta sẽ tìm kiếm nhị phân (binary search) hoặc tạo hashtable để tìm kiếm. 
+
+Chẳng hạn ta sẽ tính $\displaystyle x_{r} =c\times \left( r^{e}\right)^{-1}$ từ $\displaystyle 1$ tới $\displaystyle 2^{\alpha n}$ và lưu cặp key-value $\displaystyle \{r,x_{r}\}$ vào trong bảng băm. Tiếp theo ta sẽ duyệt và tính $\displaystyle s^{e}$ chạy từ $\displaystyle 1$ tới $\displaystyle 2^{\alpha n}$ và so sánh với từng giá trị trong hashtable cho tới khi xuất hiện collision.
+
+
+\begin{constructionbox}{MITM Attacks}
+
+Input: $\displaystyle pk=\langle N,e\rangle $ và ciphertext $\displaystyle c$
+
+Output: $\displaystyle m< 2^{n}$ thỏa mãn $\displaystyle m^{e} =c\bmod N$
+
+Đặt $\displaystyle T:=2^{\alpha n}$
+
+Với $\displaystyle r=1$ tới $\displaystyle T$:
+
+	$\displaystyle x_{r} :=\left[ c/r^{e}\bmod N\right]$
+
+Sort: $\displaystyle \{( r,x_{r})\}_{r=1}^{T}$ theo $\displaystyle x_{r}$. 
+
+Với $\displaystyle s=1$ tới $\displaystyle T$:
+
+	nếu $\displaystyle x_{r} =\left[ s^{e}\bmod N\right]$
+
+		trả về $\displaystyle [ r.s\bmod N]$
+        
+\end{constructionbox}
+
+
+
+
+
+\subsubsection{Short message and small $e$}
+
+
+Ý tưởng đơn giản như sau: Nếu như $\displaystyle e$ nhỏ và $\displaystyle m< N^{1/e}$ thì ta có thể lấy căn bậc $\displaystyle e$ của ciphertext $\displaystyle c$, cụ thể $\displaystyle m:=c^{1/e}$ và kết quả sẽ ra chính xác là $\displaystyle m$ (không có sai số). 
+
+
+\subsubsection{Coppersmith's attack}
+
+
+Attack này được dùng trong trường hợp một phần plaintext ban đầu được tiết lộ. Xét tình huống người gửi tin nhắn muốn gửi $\displaystyle m=m_{1} ||m_{2}$ với public ket $\displaystyle \langle N,e\rangle $. Trong đó ta đã biết $\displaystyle m_{1}$ nhưng ta không biết $\displaystyle m_{2}$. Ta giả sử $\displaystyle m_{2}$ có độ dài là $\displaystyle k$ bits. Lúc này $\displaystyle m=B\times m_{1} +m_{2} =2^{k} m_{1} +m_{2}$. Nếu ta biết được ciphertext $\displaystyle c=\left[( m_{1} ||m_{2})^{3}\bmod N\right]$ thì ta có thể dựng một đa thức $\displaystyle p( x) =\left( 2^{k} m_{1} +x\right)^{e} -c$ có nghiệm là $\displaystyle m_{2}$ và $\displaystyle |m_{2} |< B$. Tuy vậy nếu như $\displaystyle B$ quá lớn thì việc tìm nghiệm sẽ trở nên khó. Đặc biệt, nghiệm mà ta muốn tìm là nghiệm trên trường hữu hạn $\displaystyle \mathbb{Z}_{N}^{*}$ sẽ khác với việc tìm nghiệm trên trường số thực. 
+
+Lúc này ta cần tới một định lý sau:
+
+\textbf{Coppersmith's small roots.} Cho một đa thức $\displaystyle p( x)$ có $\displaystyle \deg p=e$. Khi đó trong thời gian đa thức $\displaystyle poly( ||N||,e)$, ta có thể tìm tất cả các nghiệm $\displaystyle m$ thỏa mãn phương trình đồng dư $\displaystyle p( m) \equiv 0\bmod N$ và $\displaystyle |m|< N^{1/e}$.
+
+Như vậy attack này chỉ thực sự hiệu quả khi $\displaystyle e$ nhỏ. 
+
+
+
+\subsubsection{Related Messages}
+
+Trường hợp tiếp theo mà ta xét tới đó là khi người gửi gửi hai messages $\displaystyle m_{0} ,m_{1}$ có mối liên hệ tuyến tính với nhau. Ta xét $\displaystyle pk=\langle N,e\rangle $ và hai messages $\displaystyle m_{0} ,m_{1}$ thỏa mãn $\displaystyle m_{0} =m$ và $\displaystyle m_{1} =am+b$.
+
+Nếu ta biết thông tin về $\displaystyle a,b$ nhưng ta không biết về $\displaystyle m$ thì ta vẫn có thể khôi phục lại được $\displaystyle m$ như sau: Ta có $\displaystyle c_{0} =m^{e}\bmod N$ và $\displaystyle c_{1} =( am+b)^{e}\bmod N$. Xét $\displaystyle f_{0}( x) =x^{e} -c_{0}$ và $\displaystyle f_{1}( x) =( ax+b)^{e} -c_{1}$. Cả hai đa thức này đều có nghiệm chung là $\displaystyle ( x-m)$. 
+
+Thuật lấy GCD của hai đa thức trên $\displaystyle \mathbb{Z}_{N}^{*}$ có độ phức tạp thời gian là $\displaystyle poly( ||N||,e)$. Cho nên với $\displaystyle e$ nhỏ thì attacks trên sẽ khả thi. 
+
+\subsubsection{Same messages for multiple receivers}
+
+
+Trong trường hợp này người gửi gửi các đoạn tin nhắn giống hệt nhau cho nhiều người nhận. Xét trường hợp số mũ lập mã $\displaystyle e=3$ nhỏ và ta sử dụng 3 cặp khóa công khai $\displaystyle pk_{1} =\langle N_{1} ,3\rangle ,pk_{2} =\langle N_{2} ,3\rangle ,pk_{3} =\langle N_{3} ,3\rangle $. \ Người nghe lén sẽ có được thông tin của 
+\begin{equation*}
+c_{1} \equiv m^{3}\bmod N_{1} ,c_{2} \equiv m^{3}\bmod N_{2} ,c_{3} \equiv m^{3}\bmod N_{3}
+\end{equation*}
+Trong đó $\displaystyle ( N_{i} ,N_{j}) =1$ vì nếu như ước chung của chúng khác 1 thì ta có thể factor lại $\displaystyle N_{i}$ và tính được $\displaystyle m$ ban đầu. Để khôi phục lại $\displaystyle m$ ta sẽ sử dụng định lí thặng dư Trung Hoa. Cụ thể tồn tại duy nhất một số $\displaystyle \wideparen{c} < N_{1} N_{2} N_{3}$ sao cho 
+\begin{equation*}
+\wideparen{c} =c_{i}\bmod N_{i}
+\end{equation*}
+Và vì $\displaystyle m< \min\{N_{1} ,N_{2} ,N_{3}\}$ cho nên $\displaystyle m^{3} < N_{1} N_{2} N_{3}$ và dẫn tới $\displaystyle \wideparen{c} =m^{3}$. Sau đó ta sẽ lấy căn bậc 3 của giá trị này để khôi phục lại $\displaystyle m$. 
+
+
+
+
+\begin{thebibliography}{99}
+\bibitem{rade}
+Introduction to Modern Cryptography, Jonathan Katz, Yehuda Lindell
+\bibitem{rade}
+An Intensive Introduction to Cryptography, Boaz Barak
+
+
+\end{thebibliography}
+\end{document}
