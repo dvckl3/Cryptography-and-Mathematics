@@ -76,4 +76,8 @@ class Challenge():
 import builtins; builtins.Challenge = Challenge # hack to enable challenge to be run locally, see https://cryptohack.org/faq/#listener
 listener.start_server(port=13385)
 ```
-Hồi đấy mình có lụm được cái WU này https://giacomopope.com/redpwn/
+Hồi đấy mình có lụm được cái WU này https://giacomopope.com/redpwn/ 
+
+Mọi người có thể đọc qua WU bài Jeopardy trong link trên, tác giả có nói sơ qua về cách pass Miller Rabin Primality Test.
+
+# Số giả nguyên tố
