@@ -38,3 +38,25 @@ class Challenge():
 import builtins; builtins.Challenge = Challenge # hack to enable challenge to be run locally, see https://cryptohack.org/faq/#listener
 listener.start_server(port=13398)
 ```
+Phân tích: Ta có $\displaystyle N$ là tích của các safe primes. 
+
+![image](https://github.com/user-attachments/assets/e506d48e-1137-4540-95a8-bf6d49c1ec8a)
+
+Và ta cũng được cho biết $\displaystyle \phi ( n)$. Vấn đề là $\displaystyle g$. Lúc đầu mình cũng không thực sự rõ $\displaystyle g$ nó là cái gì. Mình thử check xem $\displaystyle g$ có phải là phần tử sinh của nhóm $\displaystyle \mathbb{Z} /N\mathbb{Z}$ không thì không đúng. 
+
+![image](https://github.com/user-attachments/assets/24143900-d273-4851-949c-8f9e40d818f4)
+
+Tạm thời thì mình bỏ qua $g$ và đi tới phần sau để xem hàm `get_bit` nó đang làm gì. 
+
+Nó sẽ check điều kiện: `FLAG[i//8] & (1 << (i % 8))`. Tức là với mỗi $i$ nó sẽ lấy byte thứ $i/8$ của flag. Sau đó nó sẽ lấy `1 << (i % 8)`. Đây chính là phép dịch bit, tức là nó sẽ tạo ra một số có bit 1 tại vị trí `i % 8`. Kết quả này sau đó lại được AND với byte trước đó. Như vậy điều kiện này sẽ kiểm tra xem bit ở vị trí `FLAG[i//8]` có đúng là 1 hay không do tính chất của phép AND chỉ trả về True nếu như cả hai đều True. Nếu như True thì nó sẽ trả về $\displaystyle g^{x}\bmod N$ trong đó $\displaystyle x\in [ 2,\phi ( N) -1]$.
+
+Ngược lại nếu như bit ở vị trí này bằng 0 thì nó sẽ sinh ra một số ngẫu nhiên trong khoảng từ $\displaystyle [ 1,N-1]$
+
+Tiếp theo là tới class Challenge()
+
+Ta được chọn duy nhất 1 option là `"get_bit"`. Gửi lên server vị trí của bit mà ta muốn đoán và nó sẽ trả về kết quả của hàm `get_bit`. 
+
+Vậy là ta đã nắm được bài này cần phải làm gì, đó là phân biệt được khi nào server trả về kết quả bit 1 hoặc kết quả bit 0. 
+
+
+## Hidden Subgroup
