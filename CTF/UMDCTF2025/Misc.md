@@ -26,7 +26,7 @@ Và cách để reverse lại thuật toán.
 Nhưng khá may là trong python có một thư viện được viết riêng để giải các ô chữ kiểu này đó là [puzpy](https://github.com/alexdej/puzpy/tree/master). 
 Code giải như sau: Đầu tiên mình bruteforce lại cái key của puzzle sau đó in ra solution. Key là một số có 4 chữ số từ 0 tới 9999. 
 
-```python=
+```python
 import puz
 import os
 home = os.path.expanduser("~")  
@@ -59,7 +59,7 @@ Sau một lúc tìm hiểu thì mình có biết được trong python có một
 
 Nếu như ở bài này ta thêm thẳng expr vào mà không dùng eval thì hàm `sol.add` sẽ hiểu là ta chỉ add vào một string chứ không phải là một biểu thức boolean.
 Ví udj như dưới đây sẽ lỗi. 
-```python=
+```python
 from z3 import *
 expr = " x > 2 ".split()
 x=Int('x')
@@ -73,7 +73,7 @@ print(m[x])
 
 Code giải như dưới đây:
 
-```python=
+```python
 from z3 import *
 s=[Int(f'a{i}') for i in range(81)]
 sol=Solver()
