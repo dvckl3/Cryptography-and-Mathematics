@@ -68,7 +68,7 @@ Ngược lại nếu như $\displaystyle x$ là một phần tử ngẫu nhiên 
 
 
 
-Vậy cách xác định bit sẽ là tính $\displaystyle h^{s}$ trong khoảng 2 lần, nếu như nó trả về kết quả là 1 thì ta xác định được rằng bit tại vị trí đó bằng 1. Còn nếu như bằng 0 thì coi như là rơi vào trường hợp còn lại. 
+Vậy cách xác định bit sẽ là tính $\displaystyle h^{s}$ trong khoảng 8 lần, nếu như nó trả về kết quả là 1 thì ta xác định được rằng bit tại vị trí đó bằng 1. Còn nếu như bằng 0 thì coi như là rơi vào trường hợp còn lại. 
 
 ```python
 from pwn import *
@@ -83,7 +83,7 @@ g = 986762276114520220801525811758560961667498483061127810099097
 r.recvline()
 
 def get_bit(i):
-    for _ in range(2):
+    for _ in range(8):
         r.sendline(json.dumps({"option":"get_bit","i":str(i)}).encode())
         response = json.loads(r.recvline())
         h = int(response["bit"],16)
