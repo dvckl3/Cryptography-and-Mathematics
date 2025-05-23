@@ -62,10 +62,9 @@ Vậy là ta đã nắm được bài này cần phải làm gì, đó là phân
 
 Bài toán như sau: Cho một phần tử $\displaystyle a$. Làm sao để xác định được $\displaystyle a$ có thuộc nhóm con được sinh ra bởi $\displaystyle \langle g\rangle $ hay không. Do $\displaystyle ( g,N) =1$ nên $\displaystyle g$ có cấp hữu hạn tức là tồn tại $\displaystyle r$ sao cho $\displaystyle g^{r} \equiv 1\bmod N$. Khi đó ta biết $\displaystyle r|\phi ( N)$. Mình có thử tính thì thấy $\displaystyle g^{\frac{\phi ( N)}{2^{15}}} \equiv 1\bmod N$ nên là $\displaystyle |g|=2s$ trong đó $\displaystyle s$ là tích của các số nguyên tố còn lại
 
-Bây giờ nếu server trả lại $\displaystyle h=g^{r}$ thì nếu ta lấy $\displaystyle h^{2s} \equiv 1(\bmod N)$. Nhưng vấn đề là mình có thử lấy $\displaystyle x$ random và mũ $\displaystyle 2s$ lên thì nó cũng ra bằng 1 khá nhiều...Mình nghĩ một phần là do nhóm sinh bởi $\displaystyle \langle g\rangle$ có số lượng phần tử là $\displaystyle 2s$ cũng khá lớn :v.
+Bây giờ nếu server trả lại $\displaystyle h=g^{r}$ thì nếu ta lấy $\displaystyle h^{2s} \equiv 1(\bmod N)$. Nhưng vấn đề là mình có thử lấy $\displaystyle x$ random và mũ $\displaystyle 2s$ lên thì nó cũng ra bằng 1 khá nhiều....
 
-Ngược lại nếu như $\displaystyle x$ là một phần tử ngẫu nhiên thì xác suất để nó thuộc một nhóm có cấp là $\displaystyle 2^{16}$ sẽ là $\displaystyle \frac{1}{2^{16}}$ còn đối với $\displaystyle h=g^{r}$ ta sẽ tính $\displaystyle h^{s} =g^{2\times \frac{r}{2} \times s} =g^{2s\times \frac{r}{2}} =1$ sẽ có xác suất xảy ra là $\displaystyle \frac{1}{2}$.
-
+Ngược lại nếu như $\displaystyle x$ là một phần tử ngẫu nhiên thì xác suất để nó thuộc một nhóm có cấp là $\displaystyle s$ sẽ là $\displaystyle \frac{s}{\phi ( N)} =\frac{1}{2^{16}}$ còn đối với $\displaystyle h=g^{r}$ ta sẽ tính $\displaystyle h^{s} =g^{2\times \frac{r}{2} \times s} =g^{2s\times \frac{r}{2}} =1$ sẽ có xác suất xảy ra là $\displaystyle \frac{1}{2}$.
 
 
 Vậy cách xác định bit sẽ là tính $\displaystyle h^{s}$ trong khoảng 8 lần, nếu như nó trả về kết quả là 1 thì ta xác định được rằng bit tại vị trí đó bằng 1. Còn nếu như bằng 0 thì coi như là rơi vào trường hợp còn lại. 
@@ -101,3 +100,4 @@ f = ''.join(flag)
 real_flag = long_to_bytes(int(f[::-1],2))[::-1]
 print(real_flag)
 ```
+Những gì học được: Đối với các bài tập như này thì việc quan trọng nhất cần làm đó là xác định được cấp của $g$. 
