@@ -36,6 +36,10 @@ Một số blog về crypto/security mình sưu tầm được: (đống này m�
 
 [7] [Maple3142](https://blog.maple3142.net/2025/03/31/dicectf-2025-quals-writeups/en/)
 
+[8] [Joseph](https://jsur.in/)
+
+[9] [CryptoHack Blog](https://blog.cryptohack.org/)
+
 
 # Maths
 Phần này mình sẽ chỉ nói về toán và các kiến thức nền tảng cần biết trong Cryptography. Các kiến thức về Cryptography mình sẽ nói trong 1 bài khác. 
